@@ -19,7 +19,8 @@ def candidate_elimination(features, labels, pos="yes", print_funct=print):
     G = [[True] * features.shape[1]] * features.shape[1]
     S = np.array([None] * features.shape[1])
 
-    print_funct("Initially,\tG = {}\n\t\tS = {}\n\n".format(str(G).replace('True', '?'), str(S).replace('None', 'φ')))
+    print_funct("Initially, G = {}".format(str(G).replace('True', '?')))
+    print_funct("S = {}\n\n".format(str(S).replace('None', 'φ')))
     for i, (d, l) in enumerate(zip(features, labels)):
         if l == pos:
             if S_space[i] is None and i == 0:
@@ -44,8 +45,9 @@ def candidate_elimination(features, labels, pos="yes", print_funct=print):
                         G_space[i][j] = [True] * features.shape[1]
 
         format_S = str(S_space[i]).replace('[', '<').replace(']', '>').replace('True', '?')
-        format_G = [str(G_space[i]).replace('[', '<').replace(']', '>').replace('True', '?')[1:-1]]
-        print_funct("For instance {}: G{} = {}\n\t\tS{} = {}\n".format(i+1, i+1, format_G, i+1, format_S))
+        format_G = str(G_space[i]).replace('[', '<').replace(']', '>').replace('True', '?')
+        print_funct("For instance {}: G{} = {}\n".format(i+1, i+1, format_G))
+        print_funct("\t\tS{} = {}\n".format(i+1, format_S))
 
     final_G = list()
     final_S = list()
@@ -53,6 +55,10 @@ def candidate_elimination(features, labels, pos="yes", print_funct=print):
         if (not isinstance(g, bool)) and (s in g) and isinstance(s, str):
             final_G.append(g)
         final_S.append(s)
+
+    print_funct('\n')
+    print_funct("Final G: {}".format(str(final_G).replace('[', '<').replace(']', '>').replace('True', '?')))
+    print_funct("Final S: {}".format(str(final_S).replace('[', '<').replace(']', '>').replace('True', '?')))
 
     return final_G, final_S
 
@@ -75,6 +81,9 @@ def find_s(features, labels, pos="yes", print_funct=print):
 
         format_S = str(S_space[i]).replace('[', '<').replace(']', '>').replace('True', '?')
         print_funct("For instance {}: h{} = {}\n".format(i+1, i+1, format_S))
+
+    print_funct('\n')
+    print_funct("Final h: {}".format(str(S_space[-1]).replace('[', '<').replace(']', '>').replace('True', '?')))
 
     return S_space
 
