@@ -6,6 +6,9 @@ import streamlit as st
 
 from algorithms import find_s, candidate_elimination
 
+# Configuring page elements
+st.beta_set_page_config(page_title="ML - Concept Learning")
+
 # Suppress warnings
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
@@ -16,7 +19,7 @@ uploaded_file = st.file_uploader("Upload your dataset", type="csv")
 text_input = st.text_area("Enter the data: columns separated by ',' and rows in newline\n(after writing data press ctrl+enter)")
 
 if len(text_input) != 0 or uploaded_file is not None:
-    header = st.checkbox("Does dataset contain header?")
+    header = st.checkbox("Does dataset contain header?", value=True)
     if uploaded_file is not None:
         if header is False:
             data = pd.read_csv(uploaded_file, header=None)
